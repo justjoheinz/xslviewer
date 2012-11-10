@@ -22,7 +22,7 @@ public class XslView extends ViewWithUiHandlers<XslViewUiHandler> implements
 	@UiField
 	TabLayoutPanel tab;
 	@UiField
-	TextArea input;
+	TextArea input; 
 	@UiField
 	SpanElement output;
 	@UiField
