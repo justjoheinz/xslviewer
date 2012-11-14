@@ -1,13 +1,12 @@
 package de.oose.xsl.client;
 
+import com.github.gwtbootstrap.client.ui.Modal;
+import com.github.gwtbootstrap.client.ui.NavLink;
 import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.logical.shared.SelectionEvent;
-import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -16,11 +15,7 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 public class XslView extends ViewWithUiHandlers<XslViewUiHandler> implements
 		XslPresenter.MyView {
 
-	private static final int OUTPUT_TAB = 2;
-	private static final int RAW_TAB = 3;
 	private final Widget widget;
-	@UiField
-	TabLayoutPanel tab;
 	@UiField
 	TextArea input; 
 	@UiField
@@ -29,6 +24,11 @@ public class XslView extends ViewWithUiHandlers<XslViewUiHandler> implements
 	TextArea xsl;
 	@UiField 
 	SpanElement raw;
+	@UiField
+	Modal m;
+	@UiField
+	NavLink about;
+	
 
 	public interface Binder extends UiBinder<Widget, XslView> {
 	}
@@ -40,23 +40,6 @@ public class XslView extends ViewWithUiHandlers<XslViewUiHandler> implements
 	}
 
 	private void bind() {
-		tab.addSelectionHandler(new SelectionHandler<Integer>() {
-			@Override
-			public void onSelection(SelectionEvent<Integer> event) {
-				if (getUiHandlers() != null) {
-					int selectedItem = event.getSelectedItem();
-					switch (selectedItem) {
-					case OUTPUT_TAB:
-					case RAW_TAB:
-						getUiHandlers().onTransform();
-						break;
-					default:
-						break;
-					}
-
-				}
-			}
-		});
 
 	}
 	
@@ -68,6 +51,21 @@ public class XslView extends ViewWithUiHandlers<XslViewUiHandler> implements
 	@UiHandler("resetButton")
 	public void onReset(ClickEvent e) {
 		getUiHandlers().onResetPressed();
+	}
+	
+	@UiHandler("outputTab")
+	public void onOutputClick(ClickEvent e) {
+		getUiHandlers().onTransform();
+	}
+	
+	@UiHandler("rawTab")
+	public void onRawClick(ClickEvent e) {
+		getUiHandlers().onTransform();
+	}
+	
+	@UiHandler("about")
+	public void onAboutClick(ClickEvent e) {
+		m.show();
 	}
 
 	@Override

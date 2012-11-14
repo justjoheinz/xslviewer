@@ -10,6 +10,7 @@ import de.oose.xsl.client.XslView;
 import de.oose.xsl.client.place.ClientPlaceManager;
 import de.oose.xsl.client.place.DefaultPlace;
 import de.oose.xsl.client.place.NameTokens;
+import de.oose.xsl.shared.Documents;
 
 public class ClientModule extends AbstractPresenterModule {
 
@@ -23,5 +24,7 @@ public class ClientModule extends AbstractPresenterModule {
 		bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.xslview);
 		
 		bind(XsltProcessor.class);
+		
+		bind(Documents.class);
 	}
 }

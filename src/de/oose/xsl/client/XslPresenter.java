@@ -17,14 +17,19 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealRootLayoutContentEvent;
 
 import de.oose.xsl.client.place.NameTokens;
+import de.oose.xsl.shared.Documents;
+import de.oose.xsl.shared.XSLDocument;
 
 public class XslPresenter extends
 		Presenter<XslPresenter.MyView, XslPresenter.MyProxy> implements
 		XslViewUiHandler {
+	
+	@Inject
+	private Documents docMap;
 
 	public interface MyView extends View, HasUiHandlers<XslViewUiHandler> {
 		public String getXML();
-
+ 
 		public void setXML(String xml);
 
 		public String getXSL();
@@ -101,8 +106,11 @@ public class XslPresenter extends
 
 	private void doSave() {
 		if (documentStorage != null) {
-			documentStorage.setItem("xsl", getView().getXSL());
-			documentStorage.setItem("xml", getView().getXML());
+			String xsl = getView().getXSL();
+			String xml = getView().getXML();
+			docMap.put("default", new XSLDocument(xsl,xml));
+			documentStorage.setItem("xsl", xsl);
+			documentStorage.setItem("xml",xml);
 		}
 	}
 	
